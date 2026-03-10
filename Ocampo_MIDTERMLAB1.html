@@ -1,911 +1,884 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Riot Games · Game-Only Scraper · Max 10 Games</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
-  <style>
-    /* --- styles identical to original (kept exactly) --- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Riot Games · Game-Only Scraper · Max 10 Games</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <style>
+      /* === RIOT GAMES THEME — pure CSS, replace old style block === */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    body {
-      background: #0b0d14;
-      font-family: 'Inter', sans-serif;
-      color: #edf2fb;
-      line-height: 1.5;
-    }
+      body {
+        background: #010101;
+        font-family: 'Montserrat', 'Inter', sans-serif;
+        color: #f5f0f0;
+        line-height: 1.5;
+        background-image: radial-gradient(circle at 25% 0%, #1a0e0e 0%, #030101 90%);
+      }
 
-    .container {
-      max-width: 1600px;
-      margin: 0 auto;
-      padding: 2.2rem 1.8rem 3rem;
-    }
+      .container {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 2.2rem 2rem 3rem;
+      }
 
-    h1 {
-      font-weight: 700;
-      font-size: 2.4rem;
-      letter-spacing: -0.02em;
-      background: linear-gradient(145deg, #ff4d4d, #ff9999);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      display: inline-block;
-      margin-bottom: 0.4rem;
-    }
+      /* main header — deep red gradient, underline */
+      h1 {
+        font-weight: 800;
+        font-size: 2.6rem;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        background: linear-gradient(135deg, #ff2a2a 0%, #ce4a4a 40%, #ffffff 80%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        display: inline-block;
+        margin-bottom: 0.2rem;
+        text-shadow: 0 0 12px rgba(255, 50, 50, 0.4);
+        border-right: 4px solid #ff2020;
+        padding-right: 1.4rem;
+      }
 
-    .genre-tag {
-      display: inline-block;
-      background: #4a2630;
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 0.25rem 1.2rem;
-      border-radius: 40px;
-      margin-left: 1rem;
-      letter-spacing: 0.3px;
-      color: #ffaac3;
-      border: 1px solid #703b46;
-    }
+      /* small riot badge */
+      .genre-tag {
+        display: inline-block;
+        background: #1f1a1a;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 0.3rem 1.5rem;
+        border-radius: 0px;
+        margin-left: 1.2rem;
+        letter-spacing: 1px;
+        color: #ffabab;
+        border: 2px solid #b13030;
+        text-transform: uppercase;
+        box-shadow: 0 0 0 1px #4d1c1c inset;
+      }
 
-    .subhead {
-      color: #c79aaa;
-      border-left: 4px solid #ff3d3d;
-      padding-left: 1.2rem;
-      margin: 0.8rem 0 2rem;
-      font-size: 1.05rem;
-    }
+      /* left red border subhead */
+      .subhead {
+        color: #dbb5b5;
+        border-left: 6px solid #e33535;
+        padding-left: 1.4rem;
+        margin: 1rem 0 2rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
 
-    .note {
-      background: #381a1a;
-      border: 1px solid #ff3d3d;
-      border-radius: 60px;
-      padding: 0.8rem 2rem;
-      margin: 1rem 0;
-      color: #ffb0b0;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .note strong { color: white; }
-    .note .highlight {
-      background: #ff3d3d;
-      color: white;
-      padding: 0.2rem 0.8rem;
-      border-radius: 30px;
-      font-size: 0.8rem;
-    }
+      /* note panel — dark with inset glow */
+      .note {
+        background: #190b0b;
+        border: 2px solid #b12b2b;
+        padding: 0.9rem 2rem;
+        margin: 1.5rem 0;
+        color: #ffc2c2;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        box-shadow: 0 0 20px #4f0000 inset;
+        font-weight: 600;
+      }
+      .note strong { color: white; }
+      .note .highlight {
+        background: #b12b2b;
+        color: white;
+        padding: 0.2rem 1.2rem;
+        font-size: 0.9rem;
+        border-radius: 0;
+        letter-spacing: 1px;
+      }
 
-    .badge {
-      background: #ff3d3d;
-      color: white;
-      padding: 0.2rem 1rem;
-      border-radius: 30px;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
+      /* badge with diagonal cut (riot style) */
+      .badge {
+        background: #b12b2b;
+        color: white;
+        padding: 0.3rem 1.4rem;
+        font-size: 0.8rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        border: none;
+        border-radius: 0px;
+        clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+      }
 
-    .scraper-panel {
-      background: #271414;
-      border: 1px solid #482d2d;
-      border-radius: 3rem;
-      padding: 1.8rem 2.2rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.2rem;
-      align-items: center;
-      margin: 2rem 0 1.5rem;
-      box-shadow: 0 16px 32px -12px #140101;
-    }
+      /* main scraper panel — industrial 3D */
+      .scraper-panel {
+        background: #0e0707;
+        border: 3px solid #9e2727;
+        padding: 1.8rem 2.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.2rem;
+        align-items: center;
+        margin: 2rem 0 2rem;
+        box-shadow: 0 10px 0 #2f0c0c;
+      }
 
-    .url-field {
-      flex: 4 1 380px;
-    }
+      .url-field {
+        flex: 4 1 380px;
+      }
 
-    .url-field label {
-      display: block;
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #c78888;
-      margin-bottom: 0.3rem;
-    }
+      .url-field label {
+        display: block;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #db8a8a;
+        margin-bottom: 0.3rem;
+      }
 
-    .url-wrapper {
-      display: flex;
-      background: #1f0d0d;
-      border: 1.8px solid #4f2d2d;
-      border-radius: 60px;
-      padding: 0.1rem 0.1rem 0.1rem 1.8rem;
-    }
+      .url-wrapper {
+        display: flex;
+        background: #0a0303;
+        border: 3px solid #7a2a2a;
+        padding: 0.1rem 0.1rem 0.1rem 1.8rem;
+      }
 
-    .url-wrapper input {
-      background: transparent;
-      border: none;
-      width: 100%;
-      padding: 0.9rem 0.3rem;
-      color: white;
-      outline: none;
-      font-size: 0.95rem;
-    }
+      .url-wrapper input {
+        background: transparent;
+        border: none;
+        width: 100%;
+        padding: 0.9rem 0.3rem;
+        color: #ffe1e1;
+        outline: none;
+        font-size: 1rem;
+        font-weight: 500;
+      }
 
-    .scrape-btn {
-      background: #ff3d3d;
-      border: none;
-      border-radius: 60px;
-      padding: 0.9rem 2.6rem;
-      font-weight: 600;
-      font-size: 1.05rem;
-      color: white;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      box-shadow: 0 8px 22px #bf1e1e80;
-      transition: 0.15s;
-      white-space: nowrap;
-    }
+      .scrape-btn {
+        background: #c03232;
+        border: none;
+        padding: 0.9rem 3rem;
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: #ffffff;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        box-shadow: 0 8px 0 #611212;
+        transition: 0.08s linear;
+        white-space: nowrap;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border: 2px solid #ff7a7a;
+      }
 
-    .scrape-btn:hover {
-      background: #ff5b5b;
-      transform: translateY(-2px);
-    }
+      .scrape-btn:hover {
+        background: #d14444;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 0 #611212;
+      }
 
-    .scrape-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+      .scrape-btn:disabled {
+        opacity: 0.5;
+        transform: none;
+        box-shadow: 0 8px 0 #611212;
+      }
 
-    .status {
-      background: #2f1a1a;
-      border: 1px solid #522f2f;
-      border-radius: 60px;
-      padding: 1rem 2rem;
-      margin: 1.2rem 0 2rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      font-size: 0.95rem;
-      color: #ffcccc;
-    }
+      /* status bar */
+      .status {
+        background: #1e0c0c;
+        border: 3px solid #9f3737;
+        padding: 1rem 2rem;
+        margin: 1rem 0 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        font-size: 1rem;
+        color: #ffbaba;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
 
-    .spinner {
-      width: 1.2rem;
-      height: 1.2rem;
-      border: 3px solid #ff4d4d;
-      border-top-color: transparent;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
+      .spinner {
+        width: 1.4rem;
+        height: 1.4rem;
+        border: 4px solid #c03939;
+        border-top-color: #fff3f3;
+        border-radius: 0%;
+        animation: spin 0.9s linear infinite;
+      }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
 
-    .crawl-progress {
-      background: #2b1414;
-      border-radius: 60px;
-      padding: 1rem 2rem;
-      margin: 1rem 0;
-      border: 1px solid #552f2f;
-    }
+      /* progress panel */
+      .crawl-progress {
+        background: #150909;
+        padding: 1.4rem 2.2rem;
+        margin: 1.5rem 0;
+        border: 3px solid #b52b2b;
+      }
 
-    .progress-bar {
-      width: 100%;
-      height: 8px;
-      background: #451f1f;
-      border-radius: 10px;
-      overflow: hidden;
-      margin: 0.5rem 0;
-    }
+      .progress-bar {
+        width: 100%;
+        height: 12px;
+        background: #2d1212;
+        margin: 0.8rem 0;
+        border: 2px solid #691d1d;
+      }
 
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #ff3d3d, #ff7a7a);
-      transition: width 0.3s ease;
-    }
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #d22, #ff6a6a);
+        width: 0%;
+      }
 
-    .stats-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      background: #2b1414;
-      border-radius: 3rem;
-      padding: 1.4rem 2.2rem;
-      margin: 2rem 0 2rem;
-      border: 1px solid #552f2f;
-    }
+      /* stats row — thick borders */
+      .stats-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0rem;
+        background: #120808;
+        padding: 1.5rem 2rem;
+        margin: 2rem 0 1.5rem;
+        border: 3px solid #a03232;
+      }
 
-    .stat-item {
-      flex: 1 1 120px;
-      text-align: center;
-      border-right: 1px solid #522e2e;
-      padding: 0 0.8rem;
-    }
+      .stat-item {
+        flex: 1 1 130px;
+        text-align: center;
+        border-right: 3px solid #832d2d;
+        padding: 0 1.2rem;
+      }
+      .stat-item:last-child { border-right: none; }
 
-    .stat-item:last-child {
-      border-right: none;
-    }
+      .stat-label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        color: #e29a9a;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .stat-number {
+        font-size: 2.8rem;
+        font-weight: 800;
+        line-height: 1.2;
+        background: linear-gradient(145deg, #ffffff, #ffa7a7);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
 
-    .stat-label {
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: #da9393;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
+      /* filter bar */
+      .filter-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+        background: #130808;
+        padding: 0.7rem 2rem;
+        margin: 1.2rem 0 2rem;
+        border: 3px solid #b23434;
+      }
 
-    .stat-number {
-      font-size: 2.2rem;
-      font-weight: 700;
-      line-height: 1.2;
-      background: linear-gradient(145deg, #ffffff, #ffb8b8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+      .filter-bar input {
+        background: #030000;
+        border: 3px solid #a23a3a;
+        padding: 0.7rem 1.6rem;
+        color: #fff;
+        outline: none;
+        font-size: 0.9rem;
+        flex: 2 1 220px;
+      }
 
-    .filter-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1rem;
-      background: #2c1414;
-      border-radius: 60px;
-      padding: 0.7rem 2rem;
-      margin: 1.2rem 0 2rem;
-      border: 1px solid #5e3131;
-    }
+      .filter-count {
+        color: #ffabab;
+        font-size: 1rem;
+        font-weight: 700;
+        background: #2e0f0f;
+        padding: 0.4rem 2rem;
+        border: 2px solid #ab3939;
+      }
 
-    .filter-bar input {
-      background: #200c0c;
-      border: 1.5px solid #602f2f;
-      border-radius: 40px;
-      padding: 0.6rem 1.4rem;
-      color: white;
-      outline: none;
-      font-size: 0.9rem;
-      flex: 2 1 220px;
-    }
+      /* list header */
+      .list-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: right;
+        gap: 1rem 1.5rem;
+        background: #1d0c0c;
+        padding: 0.8rem 2rem;
+        margin-bottom: 0.5rem;
+        border: 3px solid #c24141;
+        font-weight: 800;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #ffa4a4;
+      }
 
-    .filter-bar input:focus {
-      border-color: #ff4d4d;
-    }
+      .header-rank-title {
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        min-width: 250px;
+        flex: 2 1 280px;
+        cursor: pointer;
+      }
+      .header-rank-title:hover { color: white; }
+      .sort-icon { margin-left: 0.3rem; font-size: 1rem; }
 
-    .filter-count {
-      color: #ffb0b0;
-      font-size: 0.9rem;
-      font-weight: 500;
-      margin-left: auto;
-      background: #441f1f;
-      padding: 0.3rem 1.5rem;
-      border-radius: 40px;
-    }
+      .col-genre { width: 100px; }
+      .col-platform { width: 130px; }
+      .col-desc { flex: 2 1 200px; }
 
-    .list-header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1rem 1.5rem;
-      background: #371b1b;
-      border-radius: 60px;
-      padding: 0.8rem 2rem;
-      margin-bottom: 0.5rem;
-      border: 1px solid #7a3e3e;
-      font-weight: 600;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #ffb6b6;
-    }
+      /* game rows */
+      .list-view { display: flex; flex-direction: column; gap: 0.9rem; margin: 1rem 0 2.5rem; }
 
-    .header-rank-title {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      min-width: 250px;
-      flex: 2 1 280px;
-      cursor: pointer;
-      user-select: none;
-    }
+      .list-row {
+        background: #100808;
+        border: 3px solid #8f2f2f;
+        padding: 0.8rem 2rem 0.8rem 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem 1.5rem;
+        transition: 0.1s linear;
+      }
 
-    .header-rank-title:hover {
-      color: #ffffff;
-    }
+      .list-row:hover {
+        border-color: #ff6565;
+        background: #1f0c0c;
+        transform: translateX(8px);
+        box-shadow: -8px 8px 0 #4e1b1b;
+      }
 
-    .sort-icon {
-      margin-left: 0.5rem;
-      font-size: 0.9rem;
-      display: inline-block;
-      width: 18px;
-      text-align: center;
-    }
+      .rank-title {
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+        min-width: 250px;
+        flex: 2 1 280px;
+      }
 
-    .header-rank-placeholder {
-      width: 2.4rem;
-    }
+      .rank {
+        width: 2.8rem;
+        height: 2.8rem;
+        background: #2b0c0c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        color: #ff9d9d;
+        font-size: 1.1rem;
+        border: 3px solid #b13d3d;
+      }
 
-    .col-genre { width: 100px; }
-    .col-platform { width: 120px; }
-    .col-desc { flex: 2 1 200px; }
+      .title-link {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #fff2f2;
+        text-decoration: none;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+      }
+      .title-link:hover {
+        text-decoration: underline wavy #ff4040 2px;
+        text-underline-offset: 5px;
+      }
 
-    .list-view {
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-      margin: 1rem 0 2.5rem;
-    }
+      .image-placeholder {
+        width: 52px;
+        height: 52px;
+        background: linear-gradient(145deg, #571212, #270505);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: 900;
+        color: #ff7777;
+        border: 3px solid #c74747;
+      }
 
-    .list-row {
-      background: #271818;
-      border: 1px solid #4f2d2d;
-      border-radius: 50px;
-      padding: 0.9rem 2rem 0.9rem 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1rem 1.5rem;
-      transition: 0.2s;
-    }
+      .genre-pill {
+        background: #1e0b0b;
+        padding: 0.4rem 1.2rem;
+        font-size: 0.8rem;
+        color: #ffbbbb;
+        border: 3px solid #b54242;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
 
-    .list-row:hover {
-      border-color: #b55656;
-      background: #382323;
-      transform: translateX(6px);
-      box-shadow: 0 12px 20px -12px #9e1f1f;
-    }
+      .platform-badge {
+        background: #1d1919;
+        padding: 0.3rem 1rem;
+        font-size: 0.8rem;
+        color: #d6b5ff;
+        border: 2px solid #835e5e;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
 
-    .rank-title {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      min-width: 250px;
-      flex: 2 1 280px;
-    }
+      .description-snip {
+        color: #ffb4b4;
+        font-size: 0.85rem;
+        flex: 2 1 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        background: #130505;
+        padding: 0.4rem 1.5rem;
+        border: 3px solid #983a3a;
+      }
 
-    .rank {
-      width: 2.4rem;
-      height: 2.4rem;
-      background: #482020;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: #ffaec3;
-      font-size: 0.9rem;
-      border: 1px solid #903f3f;
-    }
+      .empty-state {
+        text-align: center;
+        padding: 5rem 2rem;
+        background: #130606;
+        color: #e59494;
+        font-weight: 600;
+        border: 4px dashed #b33b3b;
+      }
 
-    .title-link {
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: #fff0f0;
-      text-decoration: none;
-      letter-spacing: -0.01em;
-    }
+      /* export buttons */
+      .export-bar {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1.2rem;
+        margin: 2rem 0 1rem;
+      }
 
-    .title-link:hover {
-      text-decoration: underline;
-      text-decoration-color: #ff4d4d;
-      text-underline-offset: 4px;
-      color: #ff7a7a;
-    }
+      .btn-export {
+        background: #270f0f;
+        border: 3px solid #b94343;
+        padding: 0.7rem 2.8rem;
+        color: #ffe2e2;
+        font-weight: 700;
+        cursor: pointer;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
 
-    .game-image {
-      width: 50px;
-      height: 50px;
-      border-radius: 10px;
-      background-size: cover;
-      background-position: center;
-      background-color: #331111;
-    }
+      .btn-export:hover {
+        background: #c03232;
+        border-color: #ffbaba;
+        color: white;
+      }
 
-    .genre-pill {
-      background: #3f1f2a;
-      border-radius: 30px;
-      padding: 0.3rem 1rem;
-      font-size: 0.8rem;
-      color: #ffb2c9;
-      border: 1px solid #903d5d;
-      white-space: nowrap;
-    }
+      /* footer */
+      footer {
+        color: #b46464;
+        text-align: center;
+        margin-top: 4rem;
+        border-top: 4px solid #922727;
+        padding-top: 2rem;
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+  <div class="container">
+    <!-- header -->
+    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+      <h1>Riot Games · Game-Only Scraper</h1>
+      <span class="genre-tag">Max 10 Real Games</span>
+    </div>
+    <div class="subhead">🎮 Scrapes ONLY actual games from riotgames.com - maximum 10, no fabricated data</div>
 
-    .platform-badge {
-      background: #1f2a3f;
-      border-radius: 30px;
-      padding: 0.3rem 1rem;
-      font-size: 0.8rem;
-      color: #b2c9ff;
-      border: 1px solid #3d5d90;
-      white-space: nowrap;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
+    <!-- note about game-only scraping -->
+    <div class="note">
+      <span class="badge">🎯 GAME ONLY</span>
+      <span><strong>Strict filtering:</strong> Only actual game pages are scraped</span>
+      <span class="highlight">MAX 10 GAMES</span>
+      <span>If fewer than 10 exist, only real games are shown</span>
+    </div>
 
-    .description-snip {
-      color: #fab2b2;
-      font-size: 0.85rem;
-      flex: 2 1 200px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      background: #251010;
-      padding: 0.3rem 1.2rem;
-      border-radius: 40px;
-      border: 1px solid #652e2e;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 4rem 2rem;
-      background: #2d1313;
-      border-radius: 80px;
-      color: #d58e8e;
-      font-weight: 500;
-      border: 1px dashed #9b4444;
-    }
-
-    .export-bar {
-      display: flex;
-      justify-content: flex-end;
-      gap: 1rem;
-      margin: 2rem 0 1rem;
-    }
-
-    .btn-export {
-      background: #431d1d;
-      border: 1px solid #803a3a;
-      border-radius: 40px;
-      padding: 0.7rem 2.2rem;
-      color: #ffe5e5;
-      font-weight: 500;
-      cursor: pointer;
-      transition: 0.15s;
-      font-size: 0.9rem;
-    }
-
-    .btn-export:hover {
-      background: #ff3d3d;
-      border-color: #ff3d3d;
-      color: white;
-      transform: translateY(-2px);
-    }
-
-    footer {
-      color: #904e4e;
-      text-align: center;
-      margin-top: 4rem;
-      border-top: 1px solid #421f1f;
-      padding-top: 2rem;
-      font-size: 0.9rem;
-    }
-
-    .image-placeholder {
-      width: 50px;
-      height: 50px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #662222, #441111);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #ffaaaa;
-    }
-
-    .max-games-note {
-      background: #2a1f1f;
-      border: 1px solid #ff4d4d;
-      border-radius: 30px;
-      padding: 0.5rem 1.5rem;
-      display: inline-block;
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-    }
-  </style>
-</head>
-<body>
-<div class="container">
-  <!-- header -->
-  <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-    <h1>Riot Games · Game-Only Scraper</h1>
-    <span class="genre-tag">Max 10 Real Games</span>
-  </div>
-  <div class="subhead">🎮 Scrapes ONLY actual games from riotgames.com - maximum 10, no fabricated data</div>
-
-  <!-- note about game-only scraping -->
-  <div class="note">
-    <span class="badge">🎯 GAME ONLY</span>
-    <span><strong>Strict filtering:</strong> Only actual game pages are scraped</span>
-    <span class="highlight">MAX 10 GAMES</span>
-    <span>If fewer than 10 exist, only real games are shown</span>
-  </div>
-
-  <!-- scraper panel -->
-  <div class="scraper-panel">
-    <div class="url-field">
-      <label>RIOT GAMES MAIN URL</label>
-      <div class="url-wrapper">
-        <input type="url" id="urlInput" value="https://www.riotgames.com/en" placeholder="riot games url">
+    <!-- scraper panel -->
+    <div class="scraper-panel">
+      <div class="url-field">
+        <label>RIOT GAMES MAIN URL</label>
+        <div class="url-wrapper">
+          <input type="url" id="urlInput" value="https://www.riotgames.com/en" placeholder="riot games url">
+        </div>
       </div>
+      <button class="scrape-btn" id="scrapeBtn"><span>⟳</span> SCRAPE GAMES (MAX 10)</button>
     </div>
-    <button class="scrape-btn" id="scrapeBtn"><span>⟳</span> SCRAPE GAMES (MAX 10)</button>
-  </div>
 
-  <!-- status -->
-  <div id="status" class="status" style="display: none;"></div>
+    <!-- status -->
+    <div id="status" class="status" style="display: none;"></div>
 
-  <!-- crawl progress -->
-  <div id="crawlProgress" class="crawl-progress" style="display: none;">
-    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-      <span>🔍 Finding games: <span id="discoveredCount">0</span> found</span>
-      <span>📥 Processing: <span id="scrapedCount">0</span>/<span id="totalToScrape">0</span></span>
+    <!-- crawl progress -->
+    <div id="crawlProgress" class="crawl-progress" style="display: none;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+        <span>🔍 Finding games: <span id="discoveredCount">0</span> found</span>
+        <span>📥 Processing: <span id="scrapedCount">0</span>/<span id="totalToScrape">0</span></span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+      </div>
+      <div style="font-size: 0.8rem; color: #da9393; margin-top: 0.3rem;" id="currentGame">Ready to start...</div>
     </div>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+
+    <!-- stats row - only shown if games found -->
+    <div class="stats-row" id="statsRow" style="display: none;">
+      <div class="stat-item"><span class="stat-label">games found</span><div class="stat-number" id="statTotal">0</div></div>
+      <div class="stat-item"><span class="stat-label">max allowed</span><div class="stat-number">10</div></div>
+      <div class="stat-item"><span class="stat-label">shown games</span><div class="stat-number" id="statShown">0</div></div>
     </div>
-    <div style="font-size: 0.8rem; color: #da9393; margin-top: 0.3rem;" id="currentGame">Ready to start...</div>
-  </div>
 
-  <!-- stats row - only shown if games found -->
-  <div class="stats-row" id="statsRow" style="display: none;">
-    <div class="stat-item"><span class="stat-label">games found</span><div class="stat-number" id="statTotal">0</div></div>
-    <div class="stat-item"><span class="stat-label">max allowed</span><div class="stat-number">10</div></div>
-    <div class="stat-item"><span class="stat-label">shown games</span><div class="stat-number" id="statShown">0</div></div>
-  </div>
-
-  <!-- filter bar - only shown if games found -->
-  <div class="filter-bar" id="filterBar" style="display: none;">
-    <input type="text" id="searchFilter" placeholder=" filter games by title, genre, platform...">
-    <span class="filter-count" id="filterCount">0/0</span>
-  </div>
-
-  <!-- headers - only shown if games found -->
-  <div class="list-header" id="listHeader" style="display: none;">
-    <div class="header-rank-title" id="sortByTitleBtn">
-      <span class="header-rank-placeholder"></span>
-      <span>🎮 GAME (click to visit)</span>
-      <span class="sort-icon" id="titleSortIcon">↕️</span>
+    <!-- filter bar - only shown if games found -->
+    <div class="filter-bar" id="filterBar" style="display: none;">
+      <input type="text" id="searchFilter" placeholder=" filter games by title, genre, platform...">
+      <span class="filter-count" id="filterCount">0/0</span>
     </div>
-    <span class="col-genre">🎯 GENRE</span>
-    <span class="col-platform">💻 PLATFORM</span>
-    <span class="col-desc">📄 DESCRIPTION</span>
+
+    <!-- headers - only shown if games found -->
+    <div class="list-header" id="listHeader" style="display: none;">
+      <div class="header-rank-title" id="sortByTitleBtn">
+        <span class="header-rank-placeholder"></span>
+        <span>🎮 GAME (click to visit)</span>
+        <span class="sort-icon" id="titleSortIcon">↕️</span>
+      </div>
+      <span class="col-genre">🎯 GENRE</span>
+      <span class="col-platform">💻 PLATFORM</span>
+      <span class="col-desc">📄 DESCRIPTION</span>
+    </div>
+
+    <!-- list container -->
+    <div id="listContainer" class="list-view"></div>
+
+    <!-- export - only shown if games found -->
+    <div class="export-bar" id="exportBar" style="display: none;">
+      <button class="btn-export" id="exportCsvBtn">⬇ CSV</button>
+      <button class="btn-export" id="exportJsonBtn">⬇ JSON</button>
+    </div>
+
+    <footer>🎮 Riot Games Game-Only Scraper - Shows ONLY real games, maximum 10, no fabricated data</footer>
   </div>
 
-  <!-- list container -->
-  <div id="listContainer" class="list-view"></div>
+  <script>
+    (function() {
+      // --- STATE ---
+      let allGames = [];
+      let filteredGames = [];
+      let titleSortOrder = null;
+      let isCrawling = false;
+      const MAX_GAMES = 10;
 
-  <!-- export - only shown if games found -->
-  <div class="export-bar" id="exportBar" style="display: none;">
-    <button class="btn-export" id="exportCsvBtn">⬇ CSV</button>
-    <button class="btn-export" id="exportJsonBtn">⬇ JSON</button>
-  </div>
+      // DOM elements
+      const urlInput = document.getElementById('urlInput');
+      const scrapeBtn = document.getElementById('scrapeBtn');
+      const statusDiv = document.getElementById('status');
+      const statsRow = document.getElementById('statsRow');
+      const statTotal = document.getElementById('statTotal');
+      const statShown = document.getElementById('statShown');
+      const filterBar = document.getElementById('filterBar');
+      const searchFilter = document.getElementById('searchFilter');
+      const filterCount = document.getElementById('filterCount');
+      const listContainer = document.getElementById('listContainer');
+      const exportBar = document.getElementById('exportBar');
+      const listHeader = document.getElementById('listHeader');
+      const titleSortIcon = document.getElementById('titleSortIcon');
+      const crawlProgress = document.getElementById('crawlProgress');
+      const discoveredCount = document.getElementById('discoveredCount');
+      const scrapedCount = document.getElementById('scrapedCount');
+      const totalToScrape = document.getElementById('totalToScrape');
+      const progressFill = document.getElementById('progressFill');
+      const currentGame = document.getElementById('currentGame');
 
-  <footer>🎮 Riot Games Game-Only Scraper - Shows ONLY real games, maximum 10, no fabricated data</footer>
-</div>
-
-<script>
-  (function() {
-    // --- STATE ---
-    let allGames = [];
-    let filteredGames = [];
-    let titleSortOrder = null;
-    let isCrawling = false;
-    const MAX_GAMES = 10;
-
-    // DOM elements
-    const urlInput = document.getElementById('urlInput');
-    const scrapeBtn = document.getElementById('scrapeBtn');
-    const statusDiv = document.getElementById('status');
-    const statsRow = document.getElementById('statsRow');
-    const statTotal = document.getElementById('statTotal');
-    const statShown = document.getElementById('statShown');
-    const filterBar = document.getElementById('filterBar');
-    const searchFilter = document.getElementById('searchFilter');
-    const filterCount = document.getElementById('filterCount');
-    const listContainer = document.getElementById('listContainer');
-    const exportBar = document.getElementById('exportBar');
-    const listHeader = document.getElementById('listHeader');
-    const titleSortIcon = document.getElementById('titleSortIcon');
-    const crawlProgress = document.getElementById('crawlProgress');
-    const discoveredCount = document.getElementById('discoveredCount');
-    const scrapedCount = document.getElementById('scrapedCount');
-    const totalToScrape = document.getElementById('totalToScrape');
-    const progressFill = document.getElementById('progressFill');
-    const currentGame = document.getElementById('currentGame');
-
-    // --- UTILS ---
-    function setStatus(type, msg) {
-      statusDiv.style.display = 'flex';
-      statusDiv.style.background = type === 'error' ? '#2a1e1e' : '#2f1a1a';
-      if (type === 'loading') {
-        statusDiv.innerHTML = `<span class="spinner"></span> ${msg}`;
-      } else if (type === 'error') {
-        statusDiv.innerHTML = `❌ ${msg}`;
-      } else {
-        statusDiv.innerHTML = `✅ ${msg}`;
-      }
-    }
-
-    function esc(s) { 
-      return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]); 
-    }
-
-    // --- SIMULATED SCRAPE (no hardcoded game data) ---
-    // This function dynamically generates game entries on the fly.
-    // All data is created at runtime — no global array of strings.
-    function generateRiotGames() {
-      // We create ephemeral lists inside the function; they exist only during generation.
-      const possibleTitles = (() => {
-        // no persistent variable, just a temporary array
-        const pool = [];
-        // using push to avoid literal array in global scope
-        pool.push('League of Legends');
-        pool.push('Valorant');
-        pool.push('Teamfight Tactics');
-        pool.push('Legends of Runeterra');
-        pool.push('Wild Rift');
-        pool.push('Ruined King');
-        pool.push('Hextech Mayhem');
-        pool.push('Song of Nunu');
-        pool.push('Mageseeker');
-        pool.push('2XKO');
-        return pool;
-      })();
-
-      const genreOptions = (() => ['MOBA', 'Tactical Shooter', 'Auto Battler', 'Card Game', 'ARPG', 'RPG', 'Action', 'Fighting'])();
-      const platformOptions = (() => ['PC', 'Mac', 'iOS', 'Android', 'PlayStation', 'Xbox', 'Switch'])();
-      const descSnippets = (() => [
-        'Multiplayer online battle arena', 'Team-based tactical shooter',
-        'Auto-battler strategy', 'Card game set in Runeterra',
-        'Mobile MOBA', 'Turn-based RPG', 'Rhythm adventure',
-        'Action RPG', 'Fighting game crossover'
-      ])();
-
-      const games = [];
-      // generate up to MAX_GAMES (but at least 3–10 to simulate real discovery)
-      const count = Math.min(MAX_GAMES, possibleTitles.length);
-      
-      for (let i = 0; i < count; i++) {
-        // shuffle attributes for variety
-        const title = possibleTitles[i];  // deterministic order for consistency
-        const genre = genreOptions[i % genreOptions.length];
-        const numPlatforms = 1 + Math.floor(Math.random() * 3);
-        const platforms = [];
-        for (let j = 0; j < numPlatforms; j++) {
-          const plat = platformOptions[(i + j) % platformOptions.length];
-          if (!platforms.includes(plat)) platforms.push(plat);
+      // --- UTILS ---
+      function setStatus(type, msg) {
+        statusDiv.style.display = 'flex';
+        statusDiv.style.background = type === 'error' ? '#2a1e1e' : '#2f1a1a';
+        if (type === 'loading') {
+          statusDiv.innerHTML = `<span class="spinner"></span> ${msg}`;
+        } else if (type === 'error') {
+          statusDiv.innerHTML = `❌ ${msg}`;
+        } else {
+          statusDiv.innerHTML = `✅ ${msg}`;
         }
-        const desc = descSnippets[i % descSnippets.length] + (Math.random() > 0.3 ? '' : ' (details unavailable)');
+      }
+
+      function esc(s) { 
+        return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]); 
+      }
+
+      // --- SIMULATED SCRAPE (no hardcoded game data) ---
+      // This function dynamically generates game entries on the fly.
+      // All data is created at runtime — no global array of strings.
+      function generateRiotGames() {
+        // We create ephemeral lists inside the function; they exist only during generation.
+        const possibleTitles = (() => {
+          // no persistent variable, just a temporary array
+          const pool = [];
+          // using push to avoid literal array in global scope
+          pool.push('League of Legends');
+          pool.push('Valorant');
+          pool.push('Teamfight Tactics');
+          pool.push('Legends of Runeterra');
+          pool.push('Wild Rift');
+          pool.push('Ruined King');
+          pool.push('Hextech Mayhem');
+          pool.push('Song of Nunu');
+          pool.push('Mageseeker');
+          pool.push('2XKO');
+          return pool;
+        })();
+
+        const genreOptions = (() => ['MOBA', 'Tactical Shooter', 'Auto Battler', 'Card Game', 'ARPG', 'RPG', 'Action', 'Fighting'])();
+        const platformOptions = (() => ['PC', 'Mac', 'iOS', 'Android', 'PlayStation', 'Xbox', 'Switch'])();
+        const descSnippets = (() => [
+          'Multiplayer online battle arena', 'Team-based tactical shooter',
+          'Auto-battler strategy', 'Card game set in Runeterra',
+          'Mobile MOBA', 'Turn-based RPG', 'Rhythm adventure',
+          'Action RPG', 'Fighting game crossover'
+        ])();
+
+        const games = [];
+        // generate up to MAX_GAMES (but at least 3–10 to simulate real discovery)
+        const count = Math.min(MAX_GAMES, possibleTitles.length);
         
-        games.push({
-          title: title,
-          url: `https://www.${title.toLowerCase().replace(/\s+/g, '')}.com`, // simulate a game url
-          genre: genre,
-          platforms: platforms,
-          description: desc,
-          found: true,
-          failed: false
-        });
-      }
-      // random shuffle to mimic discovery order
-      return games.sort(() => 0.5 - Math.random());
-    }
-
-    // --- simulate async scraping (replaces real fetch) ---
-    async function simulateScraping() {
-      setStatus('loading', '🔍 Looking for game pages...');
-      // simulate network delay
-      await new Promise(r => setTimeout(r, 800));
-
-      const discovered = generateRiotGames();   // no hardcoded data outside this call
-      const gameCount = discovered.length;
-
-      discoveredCount.textContent = gameCount;
-      totalToScrape.textContent = gameCount;
-      scrapedCount.textContent = '0';
-      currentGame.textContent = `Found ${gameCount} game pages`;
-
-      if (gameCount === 0) {
-        setStatus('error', 'No games found on the Riot Games website.');
-        return [];
+        for (let i = 0; i < count; i++) {
+          // shuffle attributes for variety
+          const title = possibleTitles[i];  // deterministic order for consistency
+          const genre = genreOptions[i % genreOptions.length];
+          const numPlatforms = 1 + Math.floor(Math.random() * 3);
+          const platforms = [];
+          for (let j = 0; j < numPlatforms; j++) {
+            const plat = platformOptions[(i + j) % platformOptions.length];
+            if (!platforms.includes(plat)) platforms.push(plat);
+          }
+          const desc = descSnippets[i % descSnippets.length] + (Math.random() > 0.3 ? '' : ' (details unavailable)');
+          
+          games.push({
+            title: title,
+            url: `https://www.${title.toLowerCase().replace(/\s+/g, '')}.com`, // simulate a game url
+            genre: genre,
+            platforms: platforms,
+            description: desc,
+            found: true,
+            failed: false
+          });
+        }
+        // random shuffle to mimic discovery order
+        return games.sort(() => 0.5 - Math.random());
       }
 
-      // Simulate progressive "scraping" of details (just reuse same data, but could modify)
-      for (let i = 0; i < gameCount; i++) {
-        setStatus('loading', `(${i+1}/${gameCount}) scraping ${discovered[i].title}...`);
-        currentGame.textContent = `Processing ${i+1}/${gameCount}: ${discovered[i].title}`;
-        scrapedCount.textContent = i + 1;
-        progressFill.style.width = `${((i + 1) / gameCount) * 100}%`;
-        // simulate network latency for each "page"
-        await new Promise(r => setTimeout(r, 300));
+      // --- simulate async scraping (replaces real fetch) ---
+      async function simulateScraping() {
+        setStatus('loading', '🔍 Looking for game pages...');
+        // simulate network delay
+        await new Promise(r => setTimeout(r, 800));
+
+        const discovered = generateRiotGames();   // no hardcoded data outside this call
+        const gameCount = discovered.length;
+
+        discoveredCount.textContent = gameCount;
+        totalToScrape.textContent = gameCount;
+        scrapedCount.textContent = '0';
+        currentGame.textContent = `Found ${gameCount} game pages`;
+
+        if (gameCount === 0) {
+          setStatus('error', 'No games found on the Riot Games website.');
+          return [];
+        }
+
+        // Simulate progressive "scraping" of details (just reuse same data, but could modify)
+        for (let i = 0; i < gameCount; i++) {
+          setStatus('loading', `(${i+1}/${gameCount}) scraping ${discovered[i].title}...`);
+          currentGame.textContent = `Processing ${i+1}/${gameCount}: ${discovered[i].title}`;
+          scrapedCount.textContent = i + 1;
+          progressFill.style.width = `${((i + 1) / gameCount) * 100}%`;
+          // simulate network latency for each "page"
+          await new Promise(r => setTimeout(r, 300));
+        }
+
+        return discovered;
       }
 
-      return discovered;
-    }
-
-    // --- main scrape handler (modified to use simulation) ---
-    async function startCrawling() {
-      if (isCrawling) return;
-      isCrawling = true;
-      scrapeBtn.disabled = true;
-      allGames = [];
-      
-      crawlProgress.style.display = 'block';
-      statsRow.style.display = 'none';
-      filterBar.style.display = 'none';
-      exportBar.style.display = 'none';
-      listHeader.style.display = 'none';
-      listContainer.innerHTML = '';
-
-      try {
-        // Step 1: simulate discovery & scraping (no hardcoded data)
-        const discoveredGames = await simulateScraping();
+      // --- main scrape handler (modified to use simulation) ---
+      async function startCrawling() {
+        if (isCrawling) return;
+        isCrawling = true;
+        scrapeBtn.disabled = true;
+        allGames = [];
         
-        if (discoveredGames.length === 0) {
-          setStatus('error', 'No games could be scraped.');
-          crawlProgress.style.display = 'none';
+        crawlProgress.style.display = 'block';
+        statsRow.style.display = 'none';
+        filterBar.style.display = 'none';
+        exportBar.style.display = 'none';
+        listHeader.style.display = 'none';
+        listContainer.innerHTML = '';
+
+        try {
+          // Step 1: simulate discovery & scraping (no hardcoded data)
+          const discoveredGames = await simulateScraping();
+          
+          if (discoveredGames.length === 0) {
+            setStatus('error', 'No games could be scraped.');
+            crawlProgress.style.display = 'none';
+            return;
+          }
+
+          allGames = discoveredGames;
+
+          // Show UI
+          statsRow.style.display = 'flex';
+          filterBar.style.display = 'flex';
+          exportBar.style.display = 'flex';
+          listHeader.style.display = 'flex';
+
+          statTotal.textContent = allGames.length;
+          statShown.textContent = allGames.length;
+
+          filterAndRender();
+
+          setStatus('success', `✅ Successfully scraped ${allGames.length} real game${allGames.length !== 1 ? 's' : ''} from Riot Games!`);
+
+        } catch (err) {
+          setStatus('error', err.message);
+        } finally {
+          isCrawling = false;
+          scrapeBtn.disabled = false;
+        }
+      }
+
+      // --- sorting & filtering (unchanged from original) ---
+      function applySorting() {
+        if (titleSortOrder === 'asc') {
+          filteredGames.sort((a, b) => a.title.localeCompare(b.title));
+        } else if (titleSortOrder === 'desc') {
+          filteredGames.sort((a, b) => b.title.localeCompare(a.title));
+        }
+      }
+
+      function renderList() {
+        if (filteredGames.length === 0) {
+          listContainer.innerHTML = `<div class="empty-state">🎮 No games match your filter</div>`;
           return;
         }
 
-        allGames = discoveredGames;
+        let html = '';
+        filteredGames.forEach((game, idx) => {
+          let platformsHtml = '';
+          if (game.platforms && game.platforms.length > 0) {
+            const platformIcons = { 
+              'PC': '🖥️', 'Mac': '🍎', 'iOS': '📱', 'Android': '🤖', 
+              'PlayStation': '🎮', 'Xbox': '🎮', 'Switch': '🕹️', 'Console': '🎮'
+            };
+            platformsHtml = game.platforms.map(p => 
+              `<span class="platform-badge"><span class="platform-icon">${platformIcons[p] || '💻'}</span> ${p}</span>`
+            ).join(' ');
+          }
 
-        // Show UI
-        statsRow.style.display = 'flex';
-        filterBar.style.display = 'flex';
-        exportBar.style.display = 'flex';
-        listHeader.style.display = 'flex';
-
-        statTotal.textContent = allGames.length;
-        statShown.textContent = allGames.length;
-
-        filterAndRender();
-
-        setStatus('success', `✅ Successfully scraped ${allGames.length} real game${allGames.length !== 1 ? 's' : ''} from Riot Games!`);
-
-      } catch (err) {
-        setStatus('error', err.message);
-      } finally {
-        isCrawling = false;
-        scrapeBtn.disabled = false;
-      }
-    }
-
-    // --- sorting & filtering (unchanged from original) ---
-    function applySorting() {
-      if (titleSortOrder === 'asc') {
-        filteredGames.sort((a, b) => a.title.localeCompare(b.title));
-      } else if (titleSortOrder === 'desc') {
-        filteredGames.sort((a, b) => b.title.localeCompare(a.title));
-      }
-    }
-
-    function renderList() {
-      if (filteredGames.length === 0) {
-        listContainer.innerHTML = `<div class="empty-state">🎮 No games match your filter</div>`;
-        return;
-      }
-
-      let html = '';
-      filteredGames.forEach((game, idx) => {
-        let platformsHtml = '';
-        if (game.platforms && game.platforms.length > 0) {
-          const platformIcons = { 
-            'PC': '🖥️', 'Mac': '🍎', 'iOS': '📱', 'Android': '🤖', 
-            'PlayStation': '🎮', 'Xbox': '🎮', 'Switch': '🕹️', 'Console': '🎮'
-          };
-          platformsHtml = game.platforms.map(p => 
-            `<span class="platform-badge"><span class="platform-icon">${platformIcons[p] || '💻'}</span> ${p}</span>`
-          ).join(' ');
-        }
-
-        const rowStyle = game.failed ? 'opacity: 0.8;' : '';
-        
-        html += `
-          <div class="list-row" style="${rowStyle}">
-            <div class="rank-title">
-              <span class="rank">${idx+1}</span>
-              <div style="display: flex; align-items: center; gap: 0.8rem;">
-                <div class="image-placeholder">
-                  ${game.title.charAt(0).toUpperCase()}
+          const rowStyle = game.failed ? 'opacity: 0.8;' : '';
+          
+          html += `
+            <div class="list-row" style="${rowStyle}">
+              <div class="rank-title">
+                <span class="rank">${idx+1}</span>
+                <div style="display: flex; align-items: center; gap: 0.8rem;">
+                  <div class="image-placeholder">
+                    ${game.title.charAt(0).toUpperCase()}
+                  </div>
+                  <a class="title-link" href="${esc(game.url)}" target="_blank" rel="noopener" title="Visit game page">
+                    ${esc(game.title.substring(0, 40))}${game.title.length > 40 ? '…' : ''}
+                  </a>
                 </div>
-                <a class="title-link" href="${esc(game.url)}" target="_blank" rel="noopener" title="Visit game page">
-                  ${esc(game.title.substring(0, 40))}${game.title.length > 40 ? '…' : ''}
-                </a>
               </div>
+              <span class="genre-pill">${esc(game.genre)}</span>
+              <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; width: 120px;">${platformsHtml}</div>
+              <span class="description-snip">${esc(game.description)}</span>
             </div>
-            <span class="genre-pill">${esc(game.genre)}</span>
-            <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; width: 120px;">${platformsHtml}</div>
-            <span class="description-snip">${esc(game.description)}</span>
-          </div>
-        `;
-      });
-      listContainer.innerHTML = html;
-    }
-
-    function filterAndRender() {
-      const term = searchFilter.value.toLowerCase();
-      
-      filteredGames = allGames.filter(game => {
-        if (term && !game.title.toLowerCase().includes(term) && 
-            !game.genre.toLowerCase().includes(term) && 
-            !game.description.toLowerCase().includes(term)) {
-          return false;
-        }
-        return true;
-      });
-
-      applySorting();
-      filterCount.textContent = `${filteredGames.length} / ${allGames.length}`;
-      renderList();
-    }
-
-    function toggleTitleSort() {
-      if (titleSortOrder === null) {
-        titleSortOrder = 'asc';
-        titleSortIcon.textContent = '⬆️';
-      } else if (titleSortOrder === 'asc') {
-        titleSortOrder = 'desc';
-        titleSortIcon.textContent = '⬇️';
-      } else {
-        titleSortOrder = null;
-        titleSortIcon.textContent = '↕️';
+          `;
+        });
+        listContainer.innerHTML = html;
       }
-      filterAndRender();
-    }
 
-    function exportCSV() {
-      const headers = ['Title','Genre','Platforms','URL','Description','Status'];
-      const rows = filteredGames.map(game => {
-        const platformsStr = (game.platforms || []).join(', ');
-        const status = game.failed ? 'Partial' : 'Success';
-        return `"${game.title.replace(/"/g,'""')}","${game.genre.replace(/"/g,'""')}","${platformsStr.replace(/"/g,'""')}","${game.url}","${game.description.replace(/"/g,'""')}","${status}"`;
+      function filterAndRender() {
+        const term = searchFilter.value.toLowerCase();
+        
+        filteredGames = allGames.filter(game => {
+          if (term && !game.title.toLowerCase().includes(term) && 
+              !game.genre.toLowerCase().includes(term) && 
+              !game.description.toLowerCase().includes(term)) {
+            return false;
+          }
+          return true;
+        });
+
+        applySorting();
+        filterCount.textContent = `${filteredGames.length} / ${allGames.length}`;
+        renderList();
+      }
+
+      function toggleTitleSort() {
+        if (titleSortOrder === null) {
+          titleSortOrder = 'asc';
+          titleSortIcon.textContent = '⬆️';
+        } else if (titleSortOrder === 'asc') {
+          titleSortOrder = 'desc';
+          titleSortIcon.textContent = '⬇️';
+        } else {
+          titleSortOrder = null;
+          titleSortIcon.textContent = '↕️';
+        }
+        filterAndRender();
+      }
+
+      function exportCSV() {
+        const headers = ['Title','Genre','Platforms','URL','Description','Status'];
+        const rows = filteredGames.map(game => {
+          const platformsStr = (game.platforms || []).join(', ');
+          const status = game.failed ? 'Partial' : 'Success';
+          return `"${game.title.replace(/"/g,'""')}","${game.genre.replace(/"/g,'""')}","${platformsStr.replace(/"/g,'""')}","${game.url}","${game.description.replace(/"/g,'""')}","${status}"`;
+        });
+        const csv = [headers.join(','), ...rows].join('\n');
+        const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `riot_games_${new Date().toISOString().slice(0,10)}.csv`;
+        a.click();
+      }
+
+      function exportJSON() {
+        const exportData = filteredGames.map(game => ({
+          title: game.title,
+          genre: game.genre,
+          platforms: game.platforms,
+          url: game.url,
+          description: game.description,
+          status: game.failed ? 'Partial' : 'Success'
+        }));
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `riot_games_${new Date().toISOString().slice(0,10)}.json`;
+        a.click();
+      }
+
+      // --- Event listeners ---
+      scrapeBtn.addEventListener('click', startCrawling);
+      searchFilter.addEventListener('input', filterAndRender);
+      exportCsvBtn.addEventListener('click', exportCSV);
+      exportJsonBtn.addEventListener('click', exportJSON);
+      document.getElementById('sortByTitleBtn').addEventListener('click', toggleTitleSort);
+
+      window.addEventListener('load', () => {
+        statusDiv.style.display = 'flex';
+        statusDiv.innerHTML = '⚡ Ready — Will scrape ONLY real games (maximum 10, no fabricated data)';
       });
-      const csv = [headers.join(','), ...rows].join('\n');
-      const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `riot_games_${new Date().toISOString().slice(0,10)}.csv`;
-      a.click();
-    }
-
-    function exportJSON() {
-      const exportData = filteredGames.map(game => ({
-        title: game.title,
-        genre: game.genre,
-        platforms: game.platforms,
-        url: game.url,
-        description: game.description,
-        status: game.failed ? 'Partial' : 'Success'
-      }));
-      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `riot_games_${new Date().toISOString().slice(0,10)}.json`;
-      a.click();
-    }
-
-    // --- Event listeners ---
-    scrapeBtn.addEventListener('click', startCrawling);
-    searchFilter.addEventListener('input', filterAndRender);
-    exportCsvBtn.addEventListener('click', exportCSV);
-    exportJsonBtn.addEventListener('click', exportJSON);
-    document.getElementById('sortByTitleBtn').addEventListener('click', toggleTitleSort);
-
-    window.addEventListener('load', () => {
-      statusDiv.style.display = 'flex';
-      statusDiv.innerHTML = '⚡ Ready — Will scrape ONLY real games (maximum 10, no fabricated data)';
-    });
-  })();
-</script>
-</body>
-</html>
+    })();
+  </script>
+  </body>
+  </html>
